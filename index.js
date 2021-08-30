@@ -15,7 +15,7 @@ const client = new Client({ intents:
                                     Intents.FLAGS.DIRECT_MESSAGES,
                                     Intents.FLAGS.DIRECT_MESSAGE_REACTIONS
                                     ], 
-                                    allowedMentions: { parse: ['users', 'roles'], repliedUser: true },
+                                    allowedMentions: { parse: ['users'], repliedUser: true },
                             });
 
 
@@ -55,7 +55,8 @@ client.on('interactionCreate', async interaction => {
         await command.execute(interaction);
     } catch (error) {
         console.error(error);
-        return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+        //return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+        return interaction.reply({ content: `${error}`, ephemeral: true });
     }
 });
 
