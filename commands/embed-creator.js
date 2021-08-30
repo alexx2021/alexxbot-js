@@ -11,6 +11,7 @@ module.exports = {
         const title = interaction.options.getString('title');
         const body = interaction.options.getString('body');
 
+        // Check if input adheres to length limitations to avoid errors
         if (title.length > 250) {
             return await interaction.reply({content: `<a:x_:826577785173704754> The title must be less than 250 characters long.`, ephemeral: true})
         }
@@ -24,13 +25,13 @@ module.exports = {
         .setDescription(`${body}`)
         .setFooter(`Created by ${interaction.user.tag}`)
 
-
+        // Check if permissions in the channel used to invoke the command are what is required to avoid errors
         if (interaction.guild.me.permissionsIn(interaction.channel).has("SEND_MESSAGES"))
         {
             if (interaction.guild.me.permissionsIn(interaction.channel).has("EMBED_LINKS")) {
                 try {
                     await interaction.channel.send({ embeds: [embed] })
-                } catch(DiscordAPIError) {
+                } catch(DiscordAPIError) { // Catch error if channel is a thread (thread permissions are not in the library yet)
                     return await interaction.reply(({ content: `<a:x_:826577785173704754> I do not have the "embed links" or "send messages" permission in this channel!`, ephemeral: true }));
                 }
 
