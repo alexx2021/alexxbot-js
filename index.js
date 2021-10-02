@@ -56,10 +56,15 @@ client.on('interactionCreate', async interaction => {
         await command.execute(interaction);
     } catch (error) {
         console.error(error);
+        console.log(`There was an error. ${e.code}`)
+        console.log(`User: ${interaction.user.tag} | Guild: ${interaction.guild.user.id}`)
         //return interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-        return interaction.reply({ content: `${error}`, ephemeral: true });
+        return interaction.reply({ content: `${error}\n (${error.code})`, ephemeral: true });
     }
 });
+
+// Error handler
+// process.on("unhandledRejection", error => console.error("Ignored an exception:", error));
 
 
 client.login(token);
