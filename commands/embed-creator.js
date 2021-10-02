@@ -43,14 +43,17 @@ module.exports = {
                             await interaction.channel.send({ embeds: [embed] })
                             return await interaction.reply(({ content: `<a:check:826577847023829032>`, ephemeral: true }));
                         } 
-                    catch (DiscordAPIError) 
-                        { // Catch error if channel is a thread (thread permissions are not in the library yet)
-                            return await interaction.reply(({ content: `<a:x_:826577785173704754> Please check that I have the "embed links", "send messages", and "view channel" permissions in this channel!`, ephemeral: true }));
-                        }
-                } 
+                    catch (e) // Catch error if channel is a thread (thread permissions are not in the library yet)
+                        {
+                        if (e.code == 50001 || e.code == 50013) 
+                            {
+                                return await interaction.reply(({ content: `<a:x_:826577785173704754> Please check that I have the "embed links", "send messages", and "view channel" permissions in this channel!!`, ephemeral: true }));
+                            }
+                        } 
+                }
             else 
                 {
-                    return await interaction.reply(({ content: `<a:x_:826577785173704754> Please check that I have the "embed links", "send messages", and "view channel" permissions in this channel!!`, ephemeral: true }));
+                    return await interaction.reply(({ content: `<a:x_:826577785173704754> Please check that I have the "embed links", "send messages", and "view channel" permissions in this channel!`, ephemeral: true }));
                 }
         }
 };
